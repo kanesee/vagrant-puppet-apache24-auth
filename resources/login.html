@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+  
+  <head>
+    <meta charset="utf-8">
+    <title>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="/_assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body { padding-top: 60px; /* 60px to make the container go all the way
+      to the bottom of the topbar */ }
+    </style>
+    <link href="/_assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/_assets/css/shared.css" rel="stylesheet">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="_assets/js/html5.js">
+      </script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    <style>
+    </style>
+
+    <script type="text/javascript" src="/_assets/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/_assets/js/referrallink-global.js"></script>
+    <script type="text/javascript" src="/_assets/js/unauthenticateduser_header.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        header();
+        footer();
+
+        handleInvalidLogin();        
+      });
+
+      function handleInvalidLogin() {
+        var securedArea = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')+"/admin";
+        if( document.referrer.indexOf(securedArea) == 0 ) {
+          $('#loginError').append("The username and password you entered is incorrect. Please try again or contact the administrator.");
+        }
+      }
+      
+      function preprocessLoginAttempt() {
+        var password = $('[name="httpd_password"]').val();
+        password = CryptoJS.SHA1(password);
+        password = //'{SHA}' +
+                   password.toString(CryptoJS.enc.Base64);
+        $('[name="httpd_password"]').val(password);
+      }
+    </script>
+
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <div class="container">
+      <form method="POST" action="">
+        <div class="control-group">
+          <label for="email">
+            Username:
+          </label>
+          <input name="httpd_username" type="text">
+        </div>
+        <div class="control-group">
+          <label for="password">
+            Password
+          </label>
+          <input name="httpd_password" type="password">
+        </div>
+        <div id="loginError" class="error"></div>
+        <input type="submit" name="login" value="Login" onclick="preprocessLoginAttempt()"/>
+        <!--
+        <br><a href="/referrallink/registerAdmin.html">register new admin (only for testing)</a>
+        -->
+      </form>
+    </div>
+
+    <div id="footer"></div>
+    <style>
+      
+    </style>
+    <script src="/_assets/js/bootstrap.js">
+    </script>
+  </body>
+</html>
